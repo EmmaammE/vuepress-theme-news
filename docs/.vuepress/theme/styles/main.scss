@@ -1,0 +1,19 @@
+// @import url('https://fonts.googleapis.com/css2?family=Satisfy&display=swap');
+
+@import url('https://fonts.googleapis.com/css2?family=Sacramento&display=swap');
+// colors
+$bgColor:#ded2c2;
+$fontColor:#28221b;
+$color: #e3e3e2;
+
+html {
+  font-family: Georgia, sans-serif;
+  height: 100%;
+  // background: $color;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  // font-family: 'Caveat', cursive;
+  // font-family: 'Satisfy', cursive;
+  font-family: 'Sacramento', cursive;
+}
