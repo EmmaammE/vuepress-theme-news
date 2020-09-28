@@ -17,11 +17,35 @@
       </div>
 
       <div class="menu">
-        <div class="level-1">
-          
-        </div>
-        <div>
-          
+        <nav class="level-1">
+          <ul class="inner">
+            <li
+              v-for="(menu, i) in menus"
+              :key="i"
+              class="menu-tab"
+              @click="changeMenu(i)"
+            >
+              {{menu}}
+            </li>
+          </ul>
+        </nav>
+        <div class="level-2">
+            <div class="inner">
+            <!-- <div class="post-card" v-for="n of 5" :key="n">
+              <div class="page-detail">
+                <div class="page-title">XXXX</div>
+                <div class="page-description"> tttttttttttttttttttttttttttttttttttttt</div>
+              </div>
+            </div> -->
+            <router-link v-for="page in pages" :to="page.path">
+              <div class="post-card">
+                <div class="page-detail">
+                  <div class="page-title">{{ page.title }}</div>
+                  <div class="page-description">{{ page.frontmatter.description }}</div>
+                </div>
+              </div>
+            </router-link>
+          </div>
         </div>
       </div>
     </main>
@@ -32,6 +56,36 @@
 
 <script>
 export default {
+
+  mounted() {
+    console.log(this.$frontmatter)
+  },
+
+  data() {
+    return {
+      activeIndex: 0,
+    }
+  },
+
+  computed: {
+    menus() {
+      // get "menus" from frontmatter
+      return this.$frontmatter.menus;
+    },
+
+    pages() {
+      const currentTab = this.menus[this.activeIndex];
+
+      return this.$site.pages.filter(page => page.frontmatter.type === currentTab)
+    }
+  },
+
+  methods: {
+    changeMenu(index) {
+      console.log(index);
+      this.activeIndex = index;
+    }
+  }
 
 }
 </script>
@@ -94,12 +148,12 @@ export default {
 
       .menu {
         display: flex;
-        height: 100%;
+        height: 85vh;
         flex: 0 0 45%;
 
         .level-1 {
-          flex: 0 0 40%;
-          padding: 1rem;
+          flex: 0 0 35%;
+          padding: 20% 5%;
           border-width: 2px;
           border-style: solid;
           border-image: linear-gradient(
@@ -109,10 +163,68 @@ export default {
             rgba(0,0,0,1) 55%,
             #fff 90%
           ) 1;
+
+          .inner {
+            list-style: none;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-evenly;
+            align-items: center;
+            mask-image: linear-gradient(90deg, rgba(83, 79, 79, 0) 0%, #ffffff 25%, #ffffff 75%, rgba(255, 255, 255, 0) 100%);
           
-          // border-image: linear-gradient(
-          //   to bottom,  0%,
-          //     rgba(255, 255, 255, 0) 100%);
+            // menu tab
+            .menu-tab {
+              font-size: 24px;
+              text-align: center;
+              line-height: 45px;
+              width: 100%;
+              border-bottom: 1px solid #000;
+              box-shadow:  0 5px 5px -3px rgba($color: #b09174, $alpha: 0.3), 
+                0 20px 20px -10px rgba($color: #b09174, $alpha: 0.3);
+              cursor: pointer;
+              transition: all ease-in-out 300ms;
+
+              &:hover {
+                transform: translateY(-5px);
+              }
+            }
+          }
+        }
+
+        .level-2 {
+          flex: 0 0 35%;
+          padding: 10% 10px;
+          background: #f8f5f2;
+          mask-image: linear-gradient(90deg, rgba(83, 79, 79, 0) 0%, #ffffff 25%, #ffffff 75%, rgba(255, 255, 255, 0) 100%);
+
+          .inner {
+            max-height: 85vh;
+            height: 85vh;
+            overflow: auto;
+            border-image: linear-gradient(
+              to bottom,
+              #fff 0%,
+              rgba(0,0,0,1) 45%,
+              rgba(0,0,0,1) 55%,
+              #fff 100%
+            ) 1;
+            border-width: 0 2px 0 0;
+            border-style: solid;
+
+            .post-card {
+              margin: 10px 0;
+              padding: 20px;
+              cursor: pointer;
+              color: #000;
+            }
+          }
+
+          a {
+            text-decoration: none;
+          }
         }
       }
     }
