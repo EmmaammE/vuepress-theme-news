@@ -4,7 +4,7 @@ layout: Home
 menus:
 - home
 - blogs
-- notes
+- projects
 - about
 
 ---
